@@ -1,0 +1,78 @@
+
+
+# ==============================
+# Secrets and environment files
+# ==============================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials
+credentials.*
+.aws/
+
+# ==============================
+# Terraform
+# ==============================
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.rc
+.terraformrc
+
+# Local Terraform variable files may contain passwords
+*.tfvars
+*.tfvars.json
+!example.tfvars
+!example.tfvars.json
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+build/
+dist/
+*.egg-info
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ==============================
+# Docker and local development
+# ==============================
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# ==============================
+# Kubernetes local configuration
+# ==============================
+.kube/
+kubeconfig
+kubeconfig.*
+
+# ==============================
+# IDE and operating system
+# ==============================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
