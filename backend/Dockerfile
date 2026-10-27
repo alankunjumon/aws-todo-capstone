@@ -26,4 +26,4 @@ EXPOSE 5000
 
 # Initialize the database and start Gunicorn
 CMD ["sh", "-c", "python -c 'from app import initialize_database; initialize_database()' && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile - --error-logfile - app:app"]
-```
+
