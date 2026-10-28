@@ -28,12 +28,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   type: {{ .Values.service.type }}
+
   ports:
     - name: http
       port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.previewNodePort }}
       nodePort: {{ .Values.service.previewNodePort }}
+      {{- end }}
+
   selector:
     app.kubernetes.io/name: cloudtasks
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -47,12 +51,16 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   type: {{ .Values.service.type }}
+  
   ports:
     - name: http
       port: {{ .Values.service.port }}
       targetPort: http
       protocol: TCP
+      {{- if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
       nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
+
   selector:
     app.kubernetes.io/name: cloudtasks
     app.kubernetes.io/instance: {{ .Release.Name }}
