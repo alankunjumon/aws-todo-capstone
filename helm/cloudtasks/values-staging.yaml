@@ -2,7 +2,7 @@
 replicaCount: 1
 
 image:
-  tag: d5e01db7b4bc99bbd625c82e8b8557e970d985f9
+  tag: ed15b6f6a13adf526370397b16793898461cf6c6
 
 service:
   type: NodePort
