@@ -1,6 +1,9 @@
 
 replicaCount: 2
 
+ingress:
+  enabled: true
+
 image:
   tag: d5e01db7b4bc99bbd625c82e8b8557e970d985f9
 
@@ -8,7 +11,7 @@ rollout:
   enabled: true
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 5000
   targetPort: 5000
   nodePort: 30081

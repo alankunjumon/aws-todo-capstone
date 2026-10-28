@@ -1,6 +1,9 @@
 
 replicaCount: 2
 
+ingress:
+  enabled: false
+
 image:
   repository: 442255790021.dkr.ecr.us-east-1.amazonaws.com/aws-todo-app
   tag: d5e01db7b4bc99bbd625c82e8b8557e970d985f9
