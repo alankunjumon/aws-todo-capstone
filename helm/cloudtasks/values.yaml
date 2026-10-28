@@ -1,0 +1,35 @@
+
+replicaCount: 2
+
+image:
+  repository: 442255790021.dkr.ecr.us-east-1.amazonaws.com/aws-todo-app
+  tag: d5e01db7b4bc99bbd625c82e8b8557e970d985f9
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 5000
+  targetPort: 5000
+  nodePort: 30080
+
+containerPort: 5000
+
+env:
+  DB_HOST: ""
+  DB_PORT: "5432"
+  DB_NAME: tododb
+  DB_USER: appadmin
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+rollout:
+  enabled: false
+
+database:
+  existingSecret: cloudtasks-db-secret

@@ -1,0 +1,14 @@
+
+replicaCount: 1
+
+image:
+  tag: d5e01db7b4bc99bbd625c82e8b8557e970d985f9
+
+service:
+  type: NodePort
+  port: 5000
+  targetPort: 5000
+  nodePort: 30080
+
+rollout:
+  enabled: false
