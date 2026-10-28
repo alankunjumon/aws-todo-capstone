@@ -1,6 +1,6 @@
-
+# 
 # ============================================
-# 1. CREATE THE EKS CLUSTER
+# 1. CREATE THE EKS CLUSTER(
 # ============================================
 
 resource "aws_eks_cluster" "main" {
