@@ -1,4 +1,3 @@
-
 import os
 import logging
 
@@ -71,47 +70,204 @@ HTML = """
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CloudTasks</title>
     <style>
+        :root {
+            color-scheme: light;
+            --ink: #172033;
+            --muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --border: #e2e8f0;
+            --surface: #ffffff;
+            --background: #f5f7ff;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
-            color: #172033;
-            max-width: 650px;
-            margin: 60px auto;
-            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+            padding: 48px 20px;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                         BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(ellipse at top left, #e0e7ff 0, transparent 42%),
+                linear-gradient(135deg, #f8fafc, var(--background));
         }
+
         main {
-            background: white;
-            padding: 28px;
-            border-radius: 14px;
-            box-shadow: 0 8px 30px #00000010;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 36px;
+            background: var(--surface);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(30, 41, 59, 0.10);
         }
-        form { display: flex; gap: 10px; }
-        input[type=text] {
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 2.6rem);
+            letter-spacing: -0.045em;
+            line-height: 1.15;
+        }
+
+        main > p:first-of-type {
+            margin: 12px 0 28px;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        input[type="text"] {
             flex: 1;
             min-width: 0;
-            padding: 12px;
+            padding: 14px 16px;
+            color: var(--ink);
+            background: #fff;
             border: 1px solid #cbd5e1;
-            border-radius: 7px;
+            border-radius: 12px;
+            font: inherit;
+            transition: border-color 160ms ease, box-shadow 160ms ease;
         }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.13);
+        }
+
         button {
-            padding: 10px 14px;
+            padding: 12px 18px;
             border: 0;
-            border-radius: 7px;
-            background: #2563eb;
-            color: white;
+            border-radius: 12px;
+            background: var(--primary);
+            color: #fff;
+            font: inherit;
+            font-weight: 650;
             cursor: pointer;
+            transition: background 160ms ease, transform 160ms ease;
         }
+
+        button:hover {
+            background: var(--primary-hover);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:focus-visible,
+        input[type="checkbox"]:focus-visible {
+            outline: 3px solid rgba(79, 70, 229, 0.35);
+            outline-offset: 3px;
+        }
+
+        #message {
+            min-height: 24px;
+            margin: 10px 0 24px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        h2 {
+            margin: 0 0 8px;
+            font-size: 1.15rem;
+            letter-spacing: -0.02em;
+        }
+
+        #tasks {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
         li {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 0;
-            border-bottom: 1px solid #e2e8f0;
+            gap: 14px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
         }
-        li span { flex: 1; overflow-wrap: anywhere; }
-        li.done span { text-decoration: line-through; color: #94a3b8; }
-        .delete { background: #dc2626; }
-        #message { color: #475569; }
+
+        li:last-child {
+            border-bottom: 0;
+        }
+
+        li span {
+            flex: 1;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            line-height: 1.5;
+        }
+
+        li.done span {
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .delete {
+            flex: 0 0 auto;
+            padding: 8px 12px;
+            background: #fff1f2;
+            color: var(--danger);
+            font-size: 0.88rem;
+        }
+
+        .delete:hover {
+            background: #ffe4e6;
+            color: var(--danger-hover);
+        }
+
+        @media (max-width: 540px) {
+            body {
+                padding: 24px 12px;
+            }
+
+            main {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
+
+            form {
+                flex-direction: column;
+            }
+
+            form button {
+                width: 100%;
+            }
+
+            li {
+                gap: 10px;
+            }
+
+            .delete {
+                padding: 8px 10px;
+            }
+        }
     </style>
 </head>
 <body>
