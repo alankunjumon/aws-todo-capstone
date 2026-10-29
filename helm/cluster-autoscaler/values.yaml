@@ -1,0 +1,18 @@
+
+cloudProvider: aws
+awsRegion: us-east-1
+
+autoDiscovery:
+  clusterName: aws-todo-eks
+
+image:
+  repository: registry.k8s.io/autoscaling/cluster-autoscaler
+  tag: v1.36.1
+  pullPolicy: IfNotPresent
+
+rbac:
+  serviceAccount:
+    create: true
+    name: cluster-autoscaler
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::442255790021:role/aws-todo-cluster-autoscaler"
