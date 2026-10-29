@@ -1,0 +1,35 @@
+
+alloy:
+  mounts:
+    varlog: false
+
+  configMap:
+    content: |
+      logging {
+        level  = "info"
+        format = "logfmt"
+      }
+
+      discovery.kubernetes "pods" {
+        role = "pod"
+      }
+
+      loki.source.kubernetes "pods" {
+        targets    = discovery.kubernetes.pods.targets
+        forward_to = [loki.process.errors.receiver]
+      }
+
+      loki.process "errors" {
+        stage.match {
+          selector = "{namespace=~\".+\"} !~ \"(?i)error\""
+          action   = "drop"
+        }
+
+        forward_to = [loki.write.endpoint.receiver]
+      }
+
+      loki.write "endpoint" {
+        endpoint {
+          url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
+        }
+      }

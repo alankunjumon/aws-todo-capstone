@@ -55,7 +55,6 @@ module "iam" {
   project_name = var.project_name
 }
 
-
 # 7. Create the RDS PostgreSQL database
 module "rds" {
   source = "../../modules/rds"
@@ -81,6 +80,7 @@ module "eks" {
   node_role_arn    = module.iam.eks_node_role_arn
 
   cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
+
 }
 
 #9 Create the load balancer contoller iam role
@@ -89,4 +89,13 @@ module "load_balancer_controller_iam" {
 
   project_name            = var.project_name
   cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+}
+
+resource "aws_eks_addon" "ebs_csi_driver" {
+  cluster_name = "${var.project_name}-eks"
+  addon_name   = "aws-ebs-csi-driver"
+
+  service_account_role_arn = module.load_balancer_controller_iam.ebs_csi_role_arn
+
+  resolve_conflicts_on_create = "OVERWRITE"
 }
